@@ -6,10 +6,14 @@ interface Collection<T> {
 }
 interface Actuality {
   title: string;
-  date: Date;
+  date: Date | null;
   description: {
     json: object;
-  };
+  } | null;
+  location: {
+    lat: number;
+    lon: number;
+  } | null;
   mediaCollection: Collection<Media>;
 }
 interface Query {
@@ -33,6 +37,10 @@ export async function getAllActualities() {
             date
             description {
               json
+            }
+            location {
+                lat
+                lon
             }
             mediaCollection {
               items {

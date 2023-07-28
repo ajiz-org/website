@@ -9,7 +9,6 @@ export default async function Home() {
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
-          {actualities.length}
           <code className={styles.code}>src/app/page.tsx</code>
         </p>
         <div>
@@ -30,6 +29,20 @@ export default async function Home() {
           </a>
         </div>
       </div>
+
+      {actualities.map((actuality, index) => (
+        <div key={index}>
+          <h2>{actuality.title}</h2>
+          <p>{actuality.date?.toString()}</p>
+          <div>{JSON.stringify(actuality.description?.json)}</div>
+          {actuality.mediaCollection.items.map((item, index) => (
+            <img key={index} src={item.url} alt={item.title} />
+          ))}
+          {actuality.location && <p>
+            Location: {actuality.location.lat}, {actuality.location.lon}
+          </p>}
+        </div>
+      ))}
 
       <div className={styles.center}>
         <Image
