@@ -1,4 +1,9 @@
-import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloLink,
+  HttpLink,
+} from "@apollo/client";
 
 const TOKEN = process.env.CONTENTFUL_TOKEN;
 const SPACE = process.env.CONTENTFUL_SPACE;
@@ -9,11 +14,12 @@ const http = new HttpLink({
   headers: {
     Authorization: `Bearer ${TOKEN}`,
   },
+  fetch: (data, opts) => fetch(data, { ...opts, cache: "no-store" }),
 });
 
 const link = ApolloLink.from([http]);
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({ resultCaching: false });
 
 const apolloClient = new ApolloClient({
   link,
